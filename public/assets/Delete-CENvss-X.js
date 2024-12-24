@@ -1,0 +1,1 @@
+import{o as h,j as t}from"./index-Clq8qEyb.js";const o=h(t.jsx("path",{d:"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"}),"Add"),s=h(t.jsx("path",{d:"M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"}),"Delete");export{o as A,s as D};

@@ -1,0 +1,42 @@
+service: advanced-crm  # Your service name
+
+provider: 
+  name: aws
+  deploymentBucket: salestargets3
+  runtime: nodejs18.x  # Node.js runtime version (adjust as necessary)
+  region: us-east-1  # Your preferred AWS region
+  environment:
+    NODE_ENV: production
+    PORT: "5000"
+    MY_SQL_DBNAME : "sales_target_local"
+    MY_SQL_USERNAME : "admin"
+    MY_SQL_HOST : "sales-target.chcuow2uu93p.us-east-1.rds.amazonaws.com"
+    MY_SQL_PASS : "Fs1Jj4XmcjVjOq1KcE84"
+    MY_SQL_PORT : "3306"
+    JWT_SECRET_KEY : "e16a6000b0e3140abd6ee681c61fe065a809a15aa94fb89150c2cbcd42074f1c"
+
+
+      # Environment variable (optional)
+    # Add other environment variables here if needed
+
+functions:
+  backend:
+    handler: index.handler  # Specify the handler file and function
+    events:
+      - httpApi:  # Use HTTP API Gateway for REST endpoints
+          path: /  # Root path
+          method: ANY
+      - httpApi:  # Catch-all proxy for all routes
+          path: /{proxy+}
+          method: ANY
+plugins:
+  - serverless-offline  # Plugin for local development (optional)
+  - serverless-deployment-bucket # To manage deployment buckets
+
+package:
+  include:
+    - backend/public/**
+    - backend/public/assets/**
+    - backend/**/*.js  # Include all JavaScript files in the backend directory
+    - backend/**/*.json  # Include any JSON files 
+    - backend/**/*.yaml  # Include any YAML files (if applicable)
