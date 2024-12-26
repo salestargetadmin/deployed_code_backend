@@ -1,4 +1,5 @@
 service: advanced-crm  # Your service name
+# service: new-advanced-crm  # Your service name
 
 provider: 
   name: aws

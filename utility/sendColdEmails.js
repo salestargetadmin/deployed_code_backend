@@ -4,7 +4,7 @@ const generateEmail = require("./generateEmail");
 
 const nodemailer = require('nodemailer'); // Ensure nodemailer is imported
 
-const sendColdEmails = async (emails, emailObj, intervalMinutes, frequency, initiator) => {
+const sendColdEmails = async (emails, emailObj, intervalMinutes, frequency, initiator, req) => {
   try {
     // Track how many emails have been sent to each recipient
     const emailSendCounts = new Array(emails.length).fill(0);
@@ -24,8 +24,8 @@ const sendColdEmails = async (emails, emailObj, intervalMinutes, frequency, init
             try {
               const encodedCampaignName = encodeURIComponent(emailObj.campaignName);
 
-              const trackingPixelUrl = `https://gwkz7gji8j.execute-api.us-east-1.amazonaws.com/emails/track-pixel?email=${encodeURIComponent(recipientEmail)}&usermail=${emailObj.userEmail}&campaign=${encodedCampaignName}`;
-const trackingLinkUrl = `https://gwkz7gji8j.execute-api.us-east-1.amazonaws.com/emails/track-link?email=${encodeURIComponent(recipientEmail)}&usermail=${emailObj.userEmail}&campaign=${encodedCampaignName}&redirectUrl=${encodeURIComponent('https://gwkz7gji8j.execute-api.us-east-1.amazonaws.com')}`;
+              const trackingPixelUrl = `${req.protocol}://${req.hostname}/emails/track-pixel?email=${encodeURIComponent(recipientEmail)}&usermail=${emailObj.userEmail}&campaign=${encodedCampaignName}`;
+              const trackingLinkUrl = `${req.protocol}://${req.hostname}/emails/track-link?email=${encodeURIComponent(recipientEmail)}&usermail=${emailObj.userEmail}&campaign=${encodedCampaignName}&redirectUrl=https://calendly.com/nexperiatechnologies/30min`;
 console.log(trackingPixelUrl);
 console.log(trackingLinkUrl);
               console.log(account);
@@ -49,7 +49,7 @@ console.log(trackingLinkUrl);
                 text: `${emailObj.body}\n\nClick here: ${trackingLinkUrl}`, // Plain-text version
                 html: `
                   <p>${emailObj.body}</p>
-                  <a href="${trackingLinkUrl}">Click here</a>
+                  <a href="${trackingLinkUrl}">Connect with us</a>
                   <img src="${trackingPixelUrl}" alt="" style="display:none;" />`, // HTML version
               });
 

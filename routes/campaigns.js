@@ -111,7 +111,7 @@ router.post("/:campaignId/start", authenticate, async (req, res) => {
 
     // Send the emails using the campaign's interval and frequency
     // await sendColdEmails(emails, emailObj, interval, frequency);
-    await sendColdEmails(campaign.emails, emailObj, campaign.interval, campaign.frequency,initiator);
+    await sendColdEmails(campaign.emails, emailObj, campaign.interval, campaign.frequency,initiator, req);
 
     res.status(200).send(`Cold email campaign "${campaign.name}" started.`);
   } catch (error) {
